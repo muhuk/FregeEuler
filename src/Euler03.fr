@@ -1,0 +1,27 @@
+module Euler03 where
+
+
+divisibleBy :: Long -> Long -> Bool
+divisibleBy a b = a `mod` b == 0
+
+
+factors :: Long -> [Long]
+factors k = f [] firstPrime k
+    where 
+        f :: [Long] -> Long -> Long -> [Long]
+        f fs n x = if (n < x) 
+            then if (x `divisibleBy` n)
+                then f (n:fs) firstPrime (x `div` n)
+                else f fs (n + 1) x
+            else n:fs
+        firstPrime = 2L
+
+
+euler03 :: Long -> Long
+euler03 = fold max 0 . factors
+
+
+main :: IO ()
+main = do
+    println "Euler03"
+    println $ euler03 600851475143

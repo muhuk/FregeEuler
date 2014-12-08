@@ -1,0 +1,23 @@
+module Euler01 where
+
+
+divisibleBy :: Int -> Int -> Bool
+divisibleBy a b = b `mod` a == 0
+
+
+euler01 :: Int -> Int
+euler01 n = sum $ filter pred numbers
+    where 
+        pred x =(divisibleBy 3 x) `oder` (divisibleBy 5 x)
+        numbers = [1..n-1]
+
+
+euler01str :: Int  -> String
+euler01str n = "n = " ++ show n ++ "  → " ++ (show $ euler01 n)
+
+
+main :: IO ()
+main = do
+    println "Euler 01"
+    println $ euler01str 10
+    println $ euler01str 1000

@@ -1,0 +1,25 @@
+module Euler04 where
+
+
+palindrome :: (Num a, Show a) => a -> Bool
+palindrome x = let chars = unpacked $ show x 
+    in chars == (reverse chars)
+
+
+threeDigitNumbers :: [Int]
+threeDigitNumbers = [100..999]
+
+
+products :: [Int]
+products = concatMap (\x -> map (* x) [100..x]) threeDigitNumbers
+
+
+euler04 :: Int
+euler04 = fold max 0 palindromes
+    where palindromes = filter palindrome products 
+
+
+main :: IO ()
+main = do
+    println "Euler04"
+    println euler04

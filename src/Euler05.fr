@@ -1,0 +1,50 @@
+module Euler05 where
+
+
+import Data.Map as M()
+
+
+divisibleBy :: (Integral a) => a -> a -> Bool
+divisibleBy a b = a `mod` b == 0
+
+
+euler05brute :: Int -> Int
+euler05brute n = head $ filter pred [n..]
+    where pred x = fold (&&) true $ map (divisibleBy x) [1..n]
+
+
+factors :: (Integral a) => a -> [a]
+factors = reverse . f [] firstPrime
+    where 
+        f fs n x = if (n < x) 
+            then if (x `divisibleBy` n)
+                then f (n:fs) firstPrime (x `div` n)
+                else f fs (n + 1) x
+            else n:fs
+        firstPrime = 2
+
+
+factorsMap :: (Integral a, Ord a) => a -> M.Map a Int
+factorsMap = fold f M.empty . factors
+    where
+        f m n = case M.lookup n m of
+            Nothing -> M.insert n 1 m
+            Just v -> M.insert n (succ v) m
+
+
+euler05 :: Int -> Int
+euler05 n = product . map (\(a, b) -> a ^ b) $ M.toList aggregatedFactors
+    where
+        aggregatedFactors = fold g M.empty $ map (M.toList . factorsMap) [1..n]
+        g m [] = m
+        g m ((k, v):fs) = case M.lookup k m of
+            Nothing -> g (M.insert k v m) fs
+            Just i -> g (M.insert k (max v i) m) fs
+
+
+main :: IO ()
+main = do
+    println "Euler05"
+    println $ euler05brute 10
+    println $ euler05 10
+    println $ euler05 20

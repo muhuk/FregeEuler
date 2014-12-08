@@ -1,0 +1,15 @@
+module Euler02 where
+
+
+fibs :: [Long]
+fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
+
+
+euler02seq :: [Long]
+euler02seq = [x | x <- takeWhile (<= 4000000) fibs, even x] 
+
+
+main :: IO ()
+main = do
+    println "Euler02"
+    println $ sum euler02seq
