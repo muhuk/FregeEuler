@@ -1,0 +1,17 @@
+module Euler06 where
+
+
+euler06 :: (Enum a, Integral a) => a -> a
+euler06 x = squareOfSum - sumOfSquares
+    where
+        numbers = Enum.enumFromTo 1 x
+        sq i = i ^ 2        
+        squareOfSum = sq $ sum numbers
+        sumOfSquares = sum $ map sq numbers
+
+
+main :: IO ()
+main = do
+    println "Euler 01"
+    println $ euler06 10
+    println $ euler06 100
