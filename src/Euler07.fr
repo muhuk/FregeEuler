@@ -1,0 +1,32 @@
+module Euler07 where
+
+
+divisibleBy :: (Integral a) => a -> a -> Bool
+divisibleBy a b = a `mod` b == 0
+
+
+prime :: (Enum a, Integral a) => a -> Bool
+prime = f firstPrime
+    where
+        f n x = if (n < x)
+            then if (x `divisibleBy` n)
+                then false
+                else f (succ n) x
+            else true
+        firstPrime = 2
+
+
+primes :: (Enum a, Integral a) => [a]
+primes = filter prime [2..]
+
+
+nthPrime :: Int -> Int
+nthPrime n = primes !! pred n
+
+
+main :: IO ()
+main = do
+    println "Euler 07"
+    println (take 6 primes :: [Int])
+    println $ nthPrime 6
+    println $ nthPrime 10001
