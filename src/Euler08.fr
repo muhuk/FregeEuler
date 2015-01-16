@@ -22,11 +22,8 @@ x = "73167176531330624919225119674426574742355349194934" ++
     "71636269561882670428252483600823257530420752963450"
 
 
-aton :: String -> Integer
-aton s = s.aton
-
 digits :: [Integer]
-digits = map aton $ map (packed . (:[])) $ unpacked x
+digits = map String.aton $ map (packed . (:[])) $ unpacked x
 
 
 slidingWindow :: [a] -> Int -> [[a]]
