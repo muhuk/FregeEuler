@@ -1,0 +1,25 @@
+module Euler09 where
+
+requiredSum :: Int
+requiredSum = 1000
+
+
+limit :: Int
+limit = requiredSum `div` 2
+
+
+triplets :: [(Int, Int, Int)]
+triplets = [(a, b, c) | a <- [1..limit], b <- [a..limit], c <- [b..limit]]
+
+
+euler09 :: Int
+euler09 = a * b * c where
+    isSumCorrect (i, j, k) = i + j + k == requiredSum
+    isPythagorean (i, j, k) = i ^ 2 + j ^ 2 == k ^ 2
+    (a, b, c) = head $ filter isPythagorean $ filter isSumCorrect triplets
+
+
+main :: IO ()
+main = do
+    println "Euler 09"
+    println $ euler09
